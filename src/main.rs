@@ -2,28 +2,35 @@ include!(concat!(env!("OUT_DIR"), "/build_info.rs"));
 
 use blockchain_core::{blockchain::Blockchain, transaction::Transaction, wallet::Wallet};
 
+// p2p module
+// src/main.rs
 
-pub fn print_build_info() {
-    println!("ArcNova Chain Build Info:");
-    println!(" ├ Git SHA: {}", GIT_SHA);
-    println!(" └ Built:   {}", BUILD_TIME);
-}
+// Include P2P module
+mod p2p; 
+// Include test module only when running tests
+#[cfg(test)] 
+mod tests; 
 
-fn main() {
-    print_build_info();
+// Enable the asynchronous runtime
+#[tokio::main] 
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    println!("🚀 ArcNova Chain Node Starting...");
 
-    // Example usage of your blockchain
-    let alice = Wallet::new();
-    let bob = Wallet::new();
+    // TODO: Initialize chain state
 
-    let mut chain = Blockchain::new();
+    // Initialize P2P Swarm
+    let swarm = p2p::start_p2p_node().await?;
 
-    let mut tx = Transaction::new(alice.address.clone(), bob.address.clone(), 100);
-    tx.sign(&alice.private_key);
+    // Run the P2P event loop concurrently
+    let network_handle = tokio::spawn(p2p::run_p2p_event_loop(swarm));
 
-    println!("Mining block...");
-    chain.add_block(vec![tx]);
-
-    println!("{:#?}", chain);
-    println!("Valid? {}", chain.is_valid());
+    println!("⛏️ Starting main application loop...");
+    
+    loop {
+        // Main application logic (Mining, CLI, etc.)
+        tokio::time::sleep(std::time::Duration::from_secs(10)).await;
+    }
+    
+    // network_handle.await.unwrap();
+    // Ok(())
 }
