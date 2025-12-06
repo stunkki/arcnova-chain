@@ -1,3 +1,8 @@
+## [0.5.0]- 2025-06-12
+## Added
+- Simplified UTXO core layer
+- Transaction builer test cases
+
 ## [0.4.0] - 2025-12-03
 ### Added
 - P2P mod

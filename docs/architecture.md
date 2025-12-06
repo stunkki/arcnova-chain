@@ -1,6 +1,6 @@
 # Architecture Overview
 
-This document describes the internal architecture of the **Blockchain Core (Rust)** project.  
+This document describes the internal architecture of the **Blockchain Core** project.  
 The design emphasizes simplicity, readability, and correctness as a learning-focused blockchain implementation.
 
 ---

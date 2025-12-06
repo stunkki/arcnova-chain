@@ -1,4 +1,4 @@
-# ArcNova Chain (Rust)
+# ArcNova Chain
 
 A lightweight blockchain core written in Rust.  
 Designed to demonstrate blockchain fundamentals in a clear, hands-on way.

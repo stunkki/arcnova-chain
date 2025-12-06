@@ -1,5 +1,5 @@
 [package]
-name = "blockchain-core"
+name = "arcnova-chain"
 version = "0.1.0"
 edition = "2021"
 
