@@ -1,4 +1,8 @@
-## [0.5.0]- 2025-06-12
+## [0.6.0] - 2025-06-12
+## Added
+- Docker compose setup for local P2P network
+
+## [0.5.0] - 2025-06-12
 ## Added
 - Simplified UTXO core layer
 - Transaction builer test cases

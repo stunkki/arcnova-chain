@@ -1,0 +1,69 @@
+version: "3.9"
+
+services:
+  node1:
+    image: arcnova-chain:latest
+    container_name: arcnova-node1
+    build:
+      context: ..
+      dockerfile: ../Dockerfile
+    command: ["arcnova-node", "--port", "3001", "--peers", "node2:3002,node3:3003"]
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./env/node1.env
+    volumes:
+      - ./data/node1:/app/data
+    networks:
+      - arcnova-net
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+
+  node2:
+    image: arcnova-chain:latest
+    container_name: arcnova-node2
+    build:
+      context: ..
+      dockerfile: ../Dockerfile
+    command: ["arcnova-node", "--port", "3002", "--peers", "node1:3001,node3:3003"]
+    ports:
+      - "3002:3002"
+    env_file:
+      - ./env/node2.env
+    volumes:
+      - ./data/node2:/app/data
+    networks:
+      - arcnova-net
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+
+  node3:
+    image: arcnova-chain:latest
+    container_name: arcnova-node3
+    build:
+      context: ..
+      dockerfile: ../Dockerfile
+    command: ["arcnova-node", "--port", "3003", "--peers", "node1:3001,node2:3002"]
+    ports:
+      - "3003:3003"
+    env_file:
+      - ./env/node3.env
+    volumes:
+      - ./data/node3:/app/data
+    networks:
+      - arcnova-net
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+
+networks:
+  arcnova-net:
+    driver: bridge
