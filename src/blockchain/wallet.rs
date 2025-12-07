@@ -6,6 +6,15 @@ pub struct Wallet {
     pub keypair: Keypair,
 }
 
+pub fn address_from_public_key_bytes(public_key_bytes: &[u8]) -> Option<String> {
+    if public_key_bytes.len() != 32 {
+        return None;
+    }
+
+    let hash = Sha256::digest(public_key_bytes);
+    Some(hex::encode(&hash[0..20]))
+}
+
 impl Wallet {
     pub fn new() -> Self {
         let mut rng = OsRng;
@@ -14,9 +23,8 @@ impl Wallet {
     }
 
     pub fn address(&self) -> String {
-        let hash = Sha256::digest(self.keypair.public.as_bytes());
-        // simple "pubkey hash" address, first 20 bytes
-        hex::encode(&hash[0..20])
+        address_from_public_key_bytes(self.keypair.public.as_bytes())
+            .expect("public key length should always be valid")
     }
 
     pub fn public_key_bytes(&self) -> Vec<u8> {
