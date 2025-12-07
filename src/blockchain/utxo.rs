@@ -1,4 +1,4 @@
-xuse std::collections::HashMap;
+use std::collections::HashMap;
 use crate::crypto::hash::Hash;
 use super::transaction::{Transaction, TxOutput};
 
